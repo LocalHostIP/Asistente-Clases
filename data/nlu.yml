@@ -1,0 +1,33 @@
+version: "2.0"
+
+nlu:
+- intent: saludar
+  examples: |
+    - hola
+    - hi
+
+- intent: revisar
+  examples: |
+    - que [cursos](tipo_revisar) tengo? 
+    - cuales son mis [cursos](tipo_revisar)?
+    - en que [cursos](tipo_revisar) estoy?
+    - quiero ver todos mis [cursos](tipo_revisar)
+
+- intent: adios
+  examples: |
+    - adios
+    - bye
+    - hasta luego
+    - chao
+
+- intent: bot_challenge
+  examples: |
+    - quien eres?
+    - eres un bot?
+    - eres humano?
+
+- intent: reir
+  examples: |
+    - jajaja
+    - hahaha
+    - lol
