@@ -1,7 +1,7 @@
 from tkinter import *
-# importing the requests library
 import requests
 import json
+import googleSpeech
 
 #rasa run -m models --enable-api --cors "*" --debug
 
@@ -15,7 +15,8 @@ BG_COLOR = "#17202A"
 TEXT_COLOR = "#EAECEE"
 
 FONT = "Helvetica 12"
-FONT_BOLD = "Helvetica 12 bold"
+FONT_BOLD = "Helvetica 10 bold"
+
 
 class ChatApplication:
     
@@ -29,7 +30,7 @@ class ChatApplication:
     def _setup_main_window(self):
         self.window.title("Asistente Classroom")
         self.window.resizable(width=False, height=False)
-        self.window.configure(width=450, height=550, bg=BG_COLOR)
+        self.window.configure(width=460, height=550, bg=BG_COLOR)
         
         # head label
         head_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
@@ -62,35 +63,53 @@ class ChatApplication:
         self.msg_entry.bind("<Return>", self._on_enter_pressed)
         
         # send button
-        send_button = Button(bottom_label, text="Enviar", font=FONT_BOLD, width=20, bg=BG_GRAY,
+        send_button = Button(bottom_label, text="Enviar", font=FONT_BOLD, width=10, bg=BG_GRAY,
                              command=lambda: self._on_enter_pressed(None))
-        send_button.place(relx=0.77, rely=0.006, relheight=0.06, relwidth=0.22)
+        send_button.place(relx=0.75, rely=0.006, relheight=0.06, relwidth=0.14)
+
+        # voice button
+        send_button = Button(bottom_label, text="Voz", font=FONT_BOLD, width=10, bg=BG_GRAY,
+                             command=lambda: self._voice_pressed(None))
+        send_button.place(relx=0.89, rely=0.006, relheight=0.06, relwidth=0.11)
      
     def _on_enter_pressed(self, event):
         msg = self.msg_entry.get()
         self._insert_message(msg, "Tú")
-        
+
+    def _voice_pressed(self,event):
+        print('voice pressed')
+        res=googleSpeech.grabar().results[0].alternatives[0]
+        print(res.transcript)
+        self._insert_message(res.transcript,'Tú')
+
     def _insert_message(self, msg, sender):
         if not msg:
             return
         
         data = {
-            "sender":"test_usuario",
+            "sender":"ventana_usuario",
             "message":msg
         }
-        response = requests.request("POST", API_ENDPOINT, data=json.dumps(data), headers=headers)
-        resJson = response.json()
-        
+
         msgs=[]
+        try:
+            response = requests.request("POST", API_ENDPOINT, data=json.dumps(data), headers=headers)
+            resJson = response.json()        
+            for res in resJson:
+                msgs.append(res['text'])
 
-        for res in resJson:
-            msgs.append(res['text'])
-
-        self.msg_entry.delete(0, END)
-        msg1 = f"{sender}: {msg}\n\n"
-        self.text_widget.configure(state=NORMAL)
-        self.text_widget.insert(END, msg1)
-        self.text_widget.configure(state=DISABLED)
+            self.msg_entry.delete(0, END)
+            msg1 = f"{sender}: {msg}\n\n"
+            self.text_widget.configure(state=NORMAL)
+            self.text_widget.insert(END, msg1)
+            self.text_widget.configure(state=DISABLED)
+        except:
+            self.msg_entry.delete(0, END)
+            msg1 = f"{sender}: {msg} (error al enviar)\n\n"
+            self.text_widget.configure(state=NORMAL)
+            self.text_widget.insert(END, msg1)
+            self.text_widget.configure(state=DISABLED)
+            pass
         
         for m in msgs:
             self.text_widget.configure(state=NORMAL)
