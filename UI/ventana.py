@@ -1,6 +1,7 @@
 from tkinter import *
 import requests
 import json
+import threading
 import googleSpeech
 
 #rasa run -m models --enable-api --cors "*" --debug
@@ -19,10 +20,13 @@ FONT_BOLD = "Helvetica 10 bold"
 
 
 class ChatApplication:
+    voice_button = None
+    grabando = False
     
     def __init__(self):
         self.window = Tk()
         self._setup_main_window()
+        self.thGrabar=threading.Thread(target=self.grabar,daemon=True)
         
     def run(self):
         self.window.mainloop()
@@ -68,19 +72,28 @@ class ChatApplication:
         send_button.place(relx=0.75, rely=0.006, relheight=0.06, relwidth=0.14)
 
         # voice button
-        send_button = Button(bottom_label, text="Voz", font=FONT_BOLD, width=10, bg=BG_GRAY,
+        self.voice_button = Button(bottom_label, text="Voz", font=FONT_BOLD, width=10, bg=BG_GRAY,
                              command=lambda: self._voice_pressed(None))
-        send_button.place(relx=0.89, rely=0.006, relheight=0.06, relwidth=0.11)
+        self.voice_button.place(relx=0.89, rely=0.006, relheight=0.06, relwidth=0.11)
      
     def _on_enter_pressed(self, event):
         msg = self.msg_entry.get()
         self._insert_message(msg, "Tú")
 
     def _voice_pressed(self,event):
-        print('voice pressed')
-        res=googleSpeech.grabar().results[0].alternatives[0]
-        print(res.transcript)
-        self._insert_message(res.transcript,'Tú')
+        self.grabando= not self.grabando
+        print(self.thGrabar.isAlive())
+        if(self.grabando):
+            if not self.thGrabar.isAlive():
+                self.thGrabar=threading.Thread(target=self.grabar,daemon=True)
+                self.thGrabar.start()
+                self.voice_button['text']='Parar'
+        else:
+            self.voice_button['text']='Voz'
+            googleSpeech.grabando=False
+            self.msg_entry.delete(0, END)
+            self.msg_entry.insert(END,'prediciendo...')
+            
 
     def _insert_message(self, msg, sender):
         if not msg:
@@ -118,7 +131,16 @@ class ChatApplication:
         
         self.text_widget.see(END)
              
+    def grabar(self):
+        res=googleSpeech.grabar()
+        self.msg_entry.delete(0, END)
+        if res:
+            res=res.results[0].alternatives[0]
+            
+            self.msg_entry.insert(END,res.transcript)
+        
+        print('terminado')
+        
 if __name__ == "__main__":
     app = ChatApplication()
     app.run()
-    

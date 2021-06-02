@@ -6,7 +6,7 @@ import pyaudio
 import scipy.io.wavfile as wav
 import wave
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'demoServiceAccount.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './demoServiceAccount.json'
 
 WAVE_OUTPUT_FILENAME = "out.wav"
 
@@ -14,13 +14,16 @@ client = speech.SpeechClient()
 
 #WAVE_OUTPUT_FILENAME = "pruebaLuis.wav"
 
+grabando=False
+
 def record_audio():
 	CHUNK = 1024
 	FORMAT = pyaudio.paInt16
 	CHANNELS = 1
 	RATE = 16000
 	RECORD_SECONDS = 3
-
+	global grabando
+	grabando=True
 	p = pyaudio.PyAudio()
 
 	stream = p.open(format=FORMAT,
@@ -30,8 +33,10 @@ def record_audio():
 				frames_per_buffer=CHUNK)
 
 	print("* recording")
-
-	frames = [stream.read(CHUNK) for i in range(0, int(RATE / CHUNK * RECORD_SECONDS))]
+	frames=[]
+	while grabando:
+		frames.append(stream.read(CHUNK))
+	#frames = [stream.read(CHUNK) for i in range(0, int(RATE / CHUNK * RECORD_SECONDS))]
 
 	print("* done recording")
 
@@ -47,6 +52,7 @@ def record_audio():
 	wf.close()
 
 def predictAudio():
+	audio_file=io.open(WAVE_OUTPUT_FILENAME,'rb')
 	with io.open(WAVE_OUTPUT_FILENAME,'rb') as audio_file:
 		content = audio_file.read()
 		audio=speech.types.RecognitionAudio(content=content)
@@ -59,10 +65,8 @@ def predictAudio():
 		enable_word_time_offsets=True)
 
 	response=client.recognize(config=config,audio=audio)
-
 	return response
 
 def grabar():
 	record_audio()
-	print('prediciendo')
 	return predictAudio()
