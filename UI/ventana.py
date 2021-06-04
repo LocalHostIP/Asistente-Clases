@@ -77,6 +77,7 @@ class ChatApplication:
         self.text_widget.place(relheight=0.8, relwidth=.96, rely=0.08)
         self.text_widget.configure(cursor="arrow", state=DISABLED)
         self.text_widget.tag_config('msg_usuario', justify='right',wrap='word',background='#263647')
+        self.text_widget.tag_config('msg_usuarioError', justify='right',wrap='word',background='#263647',foreground='#ed5c5c')
         self.text_widget.tag_config('msg_bot', justify='left',wrap='word',background='#2f4359')
         self.text_widget.tag_config('msg_separacionU', justify='left',wrap='word',font=FONT_SEP2,background='#263647')
         self.text_widget.tag_config('msg_separacionB', justify='left',wrap='word',font=FONT_SEP2,background='#2f4359')
@@ -160,8 +161,12 @@ class ChatApplication:
 
         except:
             self.msg_entry.delete(0, END)
+
             msg1 = f"{msg}(error al enviar)"
-            self.text_widget.insert(END, msg1)
+            self.text_widget.insert(END,'\n','msg_separacionU')
+            self.text_widget.insert(END, msg1+'   ','msg_usuarioError')
+            self.text_widget.insert(END,' \n\n','msg_separacionU')
+            self.text_widget.insert(END,'\n','msg_separacion')
             pass
         
         for m in msgs:
