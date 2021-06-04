@@ -20,8 +20,8 @@ class Classroom:
         # The file token.pickle stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
-        if os.path.exists('classroom/token.pickle'):
-            with open('classroom/token.pickle', 'rb') as token:
+        if os.path.exists('classroom/credentials/token.pickle'):
+            with open('classroom/credentials/token.pickle', 'rb') as token:
                 creds = pickle.load(token)
         # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
@@ -29,10 +29,10 @@ class Classroom:
                 creds.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'classroom/credentials.json', SCOPES)
+                    'classroom/credentials/credentials.json', SCOPES)
                 creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
-            with open('classroom/token.pickle', 'wb') as token:
+            with open('classroom/credentials/token.pickle', 'wb') as token:
                 pickle.dump(creds, token)
 
         self.service = build('classroom', 'v1', credentials=creds)
@@ -44,10 +44,10 @@ class Classroom:
         if not courses:
             listaCursos.append('No se encontraron cursos')
         else:
-            #print('Courses:')
             for course in courses:
                 #print(course['name']+' '+course['id'])        
-                listaCursos.append(course['name'])
+                listaCursos.append({'nombre':course['name'],'link':course['alternateLink']})
+                #print(course)
         return listaCursos
                 
     def anuncios():

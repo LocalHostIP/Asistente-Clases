@@ -10,3 +10,9 @@ Actuales capacidades del bot:
  Siguiente por incluir:
   - Speech to text de google cloud
   
+Modulos:
+  - rasa
+  - tkinter
+  - pip install --upgrade google-cloud-speech
+  - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+  

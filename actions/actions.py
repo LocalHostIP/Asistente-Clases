@@ -30,10 +30,10 @@ class Revisar(Action):
 			#Si se estan buscando los cursos
 			if tipo=='cursos':
 				#Obtener nombre de los cursos
-				nombres=ca.getCursosNombre()
+				cursos=ca.getCursosNombre()
 				dispatcher.utter_message(text="Tus cursos son:")
-				for nombre in nombres:
-					dispatcher.utter_message(text="\t*"+nombre)
+				for curso in cursos:
+					dispatcher.utter_message(text=curso['nombre']+'\n['+curso['link']+']')
 			else:
 				#No se encontro entidad
 				dispatcher.utter_message(text="Ka?")	
