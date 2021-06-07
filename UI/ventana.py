@@ -164,7 +164,7 @@ class ChatApplication:
 
             msg1 = f"{msg}(error al enviar)"
             self.text_widget.insert(END,'\n','msg_separacionU')
-            self.text_widget.insert(END, msg1+'   ','msg_usuarioError')
+            self.text_widget.insert(END, msg1+'   ','msg_usuarioError ')
             self.text_widget.insert(END,' \n\n','msg_separacionU')
             self.text_widget.insert(END,'\n','msg_separacion')
             pass
