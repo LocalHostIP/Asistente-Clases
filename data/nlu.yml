@@ -16,7 +16,6 @@ nlu:
 - intent: adios
   examples: |
     - adios
-    - bye
     - hasta luego
     - chao
 
@@ -26,8 +25,4 @@ nlu:
     - eres un bot?
     - eres humano?
 
-- intent: reir
-  examples: |
-    - jajaja
-    - hahaha
-    - lol
+

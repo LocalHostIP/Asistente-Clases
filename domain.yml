@@ -6,7 +6,7 @@ intents:
   - adios
   - bot_challenge
   - reir
-
+  - out_of_scope
 entities:
   - tipo_revisar
 
@@ -29,6 +29,9 @@ responses:
 
   utter_reir:
   - text: "Que es tan gracios?"
+
+  utter_please_rephrase:
+  - text: "No se que quieres que haga, hable bien"
 
 actions: 
   - action_revisar
