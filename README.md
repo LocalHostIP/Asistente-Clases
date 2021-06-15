@@ -14,4 +14,6 @@ Librerias:
   - tkinter
   - pip install --upgrade google-cloud-speech
   - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+  - pip install rasa[spacy]
+  - python -m spacy download es\_core\_news_md
   
