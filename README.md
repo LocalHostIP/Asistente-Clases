@@ -5,12 +5,11 @@ Interfaz gráifica mediante TkInter
 
 Actuales capacidades del bot:
   - Revisar en que cursos está
- 
- 
- Siguiente por incluir:
+  - Buscar curso
   - Speech to text de google cloud
+  - Abrir links desde interfaz
   
-Modulos:
+Librerias:
   - rasa
   - tkinter
   - pip install --upgrade google-cloud-speech
