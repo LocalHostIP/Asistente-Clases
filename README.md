@@ -17,3 +17,5 @@ Librerias:
   - pip install rasa[spacy]
   - python -m spacy download es\_core\_news_md
   
+# Colaboradores
+El Luis
