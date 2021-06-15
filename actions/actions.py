@@ -8,6 +8,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 
 from classroom import classroom
 
@@ -21,6 +22,7 @@ class Revisar(Action):
 	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
 	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		tipo=None
+		
 		#Obtener la ultima entidad
 		if(len(tracker.latest_message['entities'])>0): 
 			tipo=tracker.latest_message['entities'][0]['value']
@@ -40,5 +42,38 @@ class Revisar(Action):
 		else:
 			#No se encontro una entidad
 			dispatcher.utter_message(text="Ka?")
+
+		return []
+
+class guardar_curso(Action):
+	global ca
+	def name(self) -> Text:
+		return "action_guardar_curso"
+
+	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
+	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		text = tracker.latest_message['text']
+
+		return [SlotSet('curso',text)]
+
+class buscar_abrir(Action):
+	global ca
+	def name(self) -> Text:
+		return "action_buscar_abrir"
+
+	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
+	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+		curso = tracker.get_slot('curso')
+		if not curso:
+			dispatcher.utter_message(text="¿Para cual curso?")
+		else:
+			dispatcher.utter_message(text='Buscando '+curso+'...')
+			resultado=ca.buscarCurso(curso)
+			if resultado:
+				dispatcher.utter_message(text=resultado['nombre']+'\n['+resultado['link']+']')
+			else:
+				dispatcher.utter_message(text='No se encontró el curso '+curso)
 
 		return []

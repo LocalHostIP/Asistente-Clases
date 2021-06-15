@@ -50,7 +50,7 @@ class ChatApplication:
                     mult=mult.strip()
                     if mult[0]=='[' and mult[len(mult)-1]==']':
                         link=mult[1:len(mult)-1]
-                        webbrowser.open(link,new=1)
+                        webbrowser.open(link,new=0)
                 
     def linkOnEnter(self,event):
         self.text_widget.config(cursor='hand1')

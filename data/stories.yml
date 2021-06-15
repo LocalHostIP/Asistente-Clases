@@ -1,7 +1,6 @@
 version: "2.0"
 
 stories:
-
 - story: path Revisar 1
   steps:
   - intent: saludar
@@ -9,29 +8,23 @@ stories:
   - intent: revisar
   - action: action_revisar
 
-#- story: happy path
-#  steps:
-##  - intent: greet
-#  - action: utter_greet
-#  - intent: mood_great
-#  - action: utter_happy
+- story: path Buscar 1
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: buscar
+  - action: action_buscar_abrir
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_buscar_abrir
 
-#- story: sad path 1
-#  steps:
-#  - intent: greet
-##  - action: utter_greet
- # - intent: mood_unhappy
- # - action: utter_cheer_up
- ## - action: utter_did_that_help
- # - intent: affirm
- # - action: utter_happy
+- story: path Buscar 2
+  steps:
+  - intent: buscar
+  - action: action_buscar_abrir
 
-#- story: sad path 2
-#  steps:
-#  - intent: greet
-#  - action: utter_greet
-#  - intent: mood_unhappy
-#  - action: utter_cheer_up
-#  - action: utter_did_that_help
-#  - intent: deny
-#  - action: utter_goodbye
+- story: path Buscar 3
+  steps:
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_buscar_abrir

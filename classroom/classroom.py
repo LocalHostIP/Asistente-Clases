@@ -12,6 +12,19 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly','https://
 'https://www.googleapis.com/auth/devstorage.read_only']
 
 
+def normalize(s): #Quitar tildes y convertir a minusculas
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+    )
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    s = s.lower()
+    return s   
+
 class Classroom:
     service = None
     def __init__(self):
@@ -49,7 +62,17 @@ class Classroom:
                 listaCursos.append({'nombre':course['name'],'link':course['alternateLink']})
                 #print(course)
         return listaCursos
+
+    def buscarCurso(self,nombre):
+        cursos=self.getCursosNombre()
+        resultado=None
+        nombre = normalize(nombre)
+        for curso in cursos:
+            if normalize(curso['nombre']).find(nombre) != -1:
+                resultado=curso
                 
+        return resultado
+    
     def anuncios():
         #anuncionsRes = service.courses().announcements().list(courseId='277317375004').execute()
         #print(anuncionsRes['announcements'][0].keys())

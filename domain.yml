@@ -7,8 +7,17 @@ intents:
   - bot_challenge
   - reir
   - out_of_scope
+  - buscar
+  - dar_curso
+  
 entities:
   - tipo_revisar
+  - tipo_buscar
+
+slots:
+  curso:
+    type: text
+    influence_conversation: true
 
 responses:
   utter_saludar:
@@ -22,7 +31,7 @@ responses:
   - text: "Revisando..."
 
   utter_adios:
-  - text: "adios"
+  - text: "Adios"
 
   utter_iamabot:
   - text: "Soy tu papá"
@@ -33,14 +42,12 @@ responses:
   utter_please_rephrase:
   - text: "No se que quieres que haga, hable bien"
 
+
 actions: 
   - action_revisar
-
-#slots:
-#  tipo_revisar:
-#    type: categorical
-#    values:
-#      - cursos
+  - action_buscar
+  - action_guardar_curso
+  - action_buscar_abrir
 
 session_config:
   session_expiration_time: 60

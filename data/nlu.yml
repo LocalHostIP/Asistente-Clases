@@ -13,6 +13,14 @@ nlu:
     - en que [cursos](tipo_revisar) estoy?
     - quiero ver todos mis [cursos](tipo_revisar)
 
+- intent: buscar
+  examples: |
+    - buscar un [curso](tipo_buscar)
+    - quiero buscar un [curso](tipo_buscar)
+    - mostrar [curso](tipo_buscar)
+    - dame el enlace del [curso](tipo_buscar)
+    - muestrtame el link del [curso](tipo_buscar)
+
 - intent: adios
   examples: |
     - adios
@@ -24,5 +32,15 @@ nlu:
     - quien eres?
     - eres un bot?
     - eres humano?
+
+- intent: dar_curso
+  examples: |
+    - español
+    - matemáticas
+    - programación
+    - visión robótica
+    - sistemas inteligentes
+    - modelado de sistemas
+
 
 
