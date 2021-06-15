@@ -1,3 +1,4 @@
 /models
-/classroom/credentials
+/classroom/credentials/*
 /UI/demoServiceAccount.json
+/UI/out.wav
