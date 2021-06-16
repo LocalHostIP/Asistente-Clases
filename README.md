@@ -1,4 +1,5 @@
 # Asistente-Clases
+Esta papa
 Asistente de clases con RASA y Google Classroom API
 
 Interfaz gráifica mediante TkInter
