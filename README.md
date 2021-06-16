@@ -19,4 +19,3 @@ Librerias:
 
 ## Colaboradores
 El Miguel
-El Luis bien pinche pitudo 
