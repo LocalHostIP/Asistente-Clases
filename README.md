@@ -8,7 +8,7 @@ Actuales capacidades del bot:
   - Buscar curso
   - Speech to text de google cloud
   - Abrir links desde interfaz
-  
+
 Librerias:
   - rasa
   - tkinter
@@ -16,6 +16,7 @@ Librerias:
   - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
   - pip install rasa[spacy]
   - python -m spacy download es\_core\_news_md
-  
+
 ## Colaboradores
 El Miguel
+El Luis bien pinche pitudo 
