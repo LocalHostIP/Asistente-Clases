@@ -19,5 +19,5 @@ Librerias:
 
 ## Colaboradores
 Tere la Secretaria
-El chiva hermana
+El chivahermano
 Murad Osmanoglu
