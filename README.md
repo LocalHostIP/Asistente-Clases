@@ -1,5 +1,4 @@
 # Asistente-Clases
-Esta papa
 Asistente de clases con RASA y Google Classroom API
 
 Interfaz gráifica mediante TkInter
@@ -19,6 +18,6 @@ Librerias:
   - python -m spacy download es\_core\_news_md
 
 ## Colaboradores
-El Miguel
-ESTAAAAAAAA
-MALIKA ESTUVO AQUI
+Tere la Secretaria
+El chiva hermana
+Murad Osmanoglu
