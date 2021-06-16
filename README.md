@@ -19,5 +19,5 @@ Librerias:
 
 ## Colaboradores
 Tere la Secretaria
-El chivahermano
+A Lazaro le gusta Luba
 Murad Osmanoglu
