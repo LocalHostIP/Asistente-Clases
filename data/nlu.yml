@@ -22,6 +22,7 @@ nlu:
     - quiero ver los ultimos [5](cantidad_revisar) [anuncios](tipo_revisar)
     - muestrame los ultimos [8](cantidad_revisar) [anuncios]{"entity":"tipo_revisar","value":"anuncios"}
     - muestrame el [ultimo]{"entity":"cantidad_revisar","value":"1"} [anuncio]{"entity":"tipo_revisar","value":"anuncios"}
+    - muestra el [ultimo]{"entity":"cantidad_revisar","value":"1"} [mensaje]{"entity":"tipo_revisar","value":"anuncios"}
     - tengo [tareas](tipo_revisar)?
 - intent: buscar
   examples: |
@@ -51,3 +52,4 @@ nlu:
     - visión robótica
     - sistemas inteligentes
     - modelado de sistemas
+    - redes de circutos

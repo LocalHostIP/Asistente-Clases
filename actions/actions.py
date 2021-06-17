@@ -45,36 +45,35 @@ class Revisar(Action):
 					dispatcher.utter_message(text="¿Para cual curso?")
 				else:
 					print(cantidad)
+					c=3
 					if cantidad:
 						try:
 							c = int(cantidad)
 						except:
-							c = 3
-						resultado=ca.anuncios(curso,c)
-					else:
-						resultado=ca.anuncios(curso,10)
+							pass
+							
+					resultado=ca.anuncios(curso,c)
 
-					print(resultado)
 					if resultado==-1:
 						dispatcher.utter_message(text='No se encontró el curso '+curso)				
 					else:
 						if resultado['anuncios']==-1:
 							dispatcher.utter_message(text=resultado['curso']+' no tiene anuncios')
 						else:
-							
 							dispatcher.utter_message(text='Anuncios de '+resultado['curso']+':')				
 							for r in resultado['anuncios']:
 								dispatcher.utter_message(json_message={"link":r['link'],"text":r['text']})
 		
 					retornar=[SlotSet('curso',None)]
+			# ------ Tareas -------------
 			elif tipo == 'tareas':
 				dispatcher.utter_message(text='Tus tareas son:\n*No tareas encontradas.*')	
 			else:
 				#No se reconoce lo que se quiere revisar
-				dispatcher.utter_message(text="No se que quieres que revise mija")	
+				dispatcher.utter_message(text="No enendí que revisar")	
 		else:
 			#No se especifico que revisar
-			dispatcher.utter_message(text="Ni idea de que revisar compa")
+			dispatcher.utter_message(text="No indicaste que revisar")
 		
 		if retornar:
 			return retornar
@@ -104,7 +103,7 @@ class buscar_abrir(Action):
 
 		curso = tracker.get_slot('curso')
 		if not curso:
-			dispatcher.utter_message(text="¿Para cual curso?")
+			dispatcher.utter_message(text="¿Para qué curso?")
 		else:
 			dispatcher.utter_message(text='Buscando '+curso+'...')
 			resultado=ca.buscarCurso(curso)

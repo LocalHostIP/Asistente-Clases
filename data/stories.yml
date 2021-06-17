@@ -29,6 +29,27 @@ stories:
     - tipo_revisar : 'anuncios'
   - action: action_revisar
 
+- story: path Revisar anuncios curso sin asignar con cantidad
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: revisar
+    entities:
+    - tipo_revisar : 'anuncios'
+    - tipo_revisar : 'cantidad'
+  - action: action_revisar
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_revisar
+
+- story: path Revisar anuncios curso asignado con cantidad
+  steps:
+  - intent: revisar
+    entities:
+    - tipo_revisar : 'anuncios'
+    - tipo_revisar : 'cantidad'
+  - action: action_revisar
+
 - story: path Revisar tarea curso sin asignar
   steps:
   - intent: saludar
