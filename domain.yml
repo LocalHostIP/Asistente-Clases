@@ -13,22 +13,27 @@ intents:
 entities:
   - tipo_revisar
   - tipo_buscar
+  - cantidad_revisar
 
 slots:
   curso:
+    type: text
+    influence_conversation: true
+  tipo_revisar:
+    type: text
+    influence_conversation: true
+  cantidad_revisar:
     type: text
     influence_conversation: true
 
 responses:
   utter_saludar:
   - text: "Hola"
+  - text: "¿Qué quiere?"
 
   utter_cheer_up:
   - text: "Here is something to cheer you up:"
     image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_revisar:
-  - text: "Revisando..."
 
   utter_adios:
   - text: "Adios"

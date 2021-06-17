@@ -1,14 +1,35 @@
 version: "2.0"
 
 stories:
-- story: path Revisar 1
+- story: path Revisar cursos
   steps:
   - intent: saludar
   - action: utter_saludar
   - intent: revisar
+    entities:
+    - tipo_revisar : 'cursos'
   - action: action_revisar
 
-- story: path Buscar 1
+- story: path Revisar anuncios curso sin asignar
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: revisar
+    entities:
+    - tipo_revisar : 'anuncios'
+  - action: action_revisar
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_revisar
+
+- story: path Revisar anuncios curso asignado
+  steps:
+  - intent: revisar
+    entities:
+    - tipo_revisar : 'anuncios'
+  - action: action_revisar
+
+- story: path Buscar buscar curso preguntar
   steps:
   - intent: saludar
   - action: utter_saludar
@@ -18,12 +39,12 @@ stories:
   - action: action_guardar_curso
   - action: action_buscar_abrir
 
-- story: path Buscar 2
+- story: path Buscar 2 buscar curso sin preguntar
   steps:
   - intent: buscar
   - action: action_buscar_abrir
 
-- story: path Buscar 3
+- story: path Buscar 3 buscar curso solo dando el curso
   steps:
   - intent: dar_curso
   - action: action_guardar_curso

@@ -59,7 +59,7 @@ class Classroom:
         else:
             for course in courses:
                 #print(course['name']+' '+course['id'])        
-                listaCursos.append({'nombre':course['name'],'link':course['alternateLink']})
+                listaCursos.append({'nombre':course['name'],'link':course['alternateLink'],'id':course['id']})
                 #print(course)
         return listaCursos
 
@@ -73,13 +73,30 @@ class Classroom:
                 
         return resultado
     
-    def anuncios():
-        #anuncionsRes = service.courses().announcements().list(courseId='277317375004').execute()
-        #print(anuncionsRes['announcements'][0].keys())
-        #anuncios = anuncionsRes['announcements']
-        #print(coursesResponse['courses'][0].keys())
-        
-        print("----------------Anuncions del curso-------------------")
-        #for anuncio in anuncios:
-        #    print(anuncio['text'])
-        #    print()
+    def anuncios(self,nombre,cantidad):
+        curso=self.buscarCurso(nombre)
+        res=None
+        if curso:
+            id_course=curso['id']
+            anuncios = self.service.courses().announcements().list(courseId=id_course,pageSize=cantidad).execute() 
+            res={'curso':curso['nombre'],'anuncios':-1}
+            if anuncios:
+                res['anuncios']=[]
+                anuncios = anuncios['announcements'] 
+                for a in anuncios:
+                    res['anuncios'].append({'id':a['id'],'text':a['text'],'link':a['alternateLink']})
+        else:
+            res = -1 # No se encontro el curso
+        return res
+
+def main():
+    ca=Classroom()
+    res=ca.anuncios('vision',10)
+    if res:
+        for r in res:
+            print(r['text'])
+    else:
+        print('no hay anuncios')
+
+if __name__=='__main__':
+    main()

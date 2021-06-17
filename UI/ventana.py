@@ -45,28 +45,35 @@ class ChatApplication:
             if event.widget.compare(start, '<=', index) and event.widget.compare(index, '<', end):
                 # return string between tag start and end
                 #print(start, end, event.widget.get(start, end))
-                multiples=event.widget.get(start, end).splitlines()
-                for mult in multiples:
-                    mult=mult.strip()
-                    if mult[0]=='[' and mult[len(mult)-1]==']':
-                        link=mult[1:len(mult)-1]
-                        webbrowser.open(link,new=0)
+                link=event.widget.get(start, end)
+                webbrowser.open(link,new=0)
                 
     def linkOnEnter(self,event):
         self.text_widget.config(cursor='hand1')
     def linkOnLeave(self,event):
         self.text_widget.config(cursor='arrow')
 
+    def limpiarPantalla(self,event):
+        self.text_widget.configure(state=NORMAL)
+        self.text_widget.delete("1.0",END)
+        self.text_widget.configure(state=DISABLED)
+
     def _setup_main_window(self):
         self.window.title("Asistente Classroom")
         self.window.resizable(width=False, height=False)
         self.window.configure(width=460, height=550, bg=BG_COLOR)
-        
+
         # head label
         head_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
-                           text="Bienvenido", font=FONT_BOLD, pady=8)
+            text="Bienvenido", font=FONT_BOLD, pady=8)
         head_label.place(relwidth=1)
         
+        # limpiar label
+        limpiar_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
+            text="Limpiar", font="Helvetica 10 underline", pady=8)
+        limpiar_label.place(relwidth=0.2)
+        limpiar_label.bind('<Button-1>',self.limpiarPantalla)
+
         # tiny divider
         line = Label(self.window, width=450, bg=BG_GRAY)
         line.place(relwidth=1, rely=0.07, relheight=0.012)
@@ -134,60 +141,55 @@ class ChatApplication:
             
 
     def _insert_message(self, msg, sender):
-        
+        #Colocar nuevo mensaje
         if not msg:
             return
 
+        #Enviar datos a rasa
         self.text_widget.configure(state=NORMAL)
         data = {
             "sender":"ventana_usuario",
             "message":msg
         }
 
-        msgs=[]
+        resJson=[]
+        self.text_widget.insert(END,'\n','msg_separacion')
         try:
+            #Obtener los mensajes
             response = requests.request("POST", API_ENDPOINT, data=json.dumps(data), headers=headers)
             resJson = response.json()        
-            for res in resJson:
-                msgs.append(res['text'])
 
             self.msg_entry.delete(0, END)
             msg1 = f"{msg}"
             
             self.text_widget.insert(END,'\n','msg_separacionU')
             self.text_widget.insert(END, msg1+'   ','msg_usuario')
-            self.text_widget.insert(END,' \n\n','msg_separacionU')
-            self.text_widget.insert(END,'\n','msg_separacion')
-
         except:
+            #Error al enviar
             self.msg_entry.delete(0, END)
 
             msg1 = f"{msg}(error al enviar)"
             self.text_widget.insert(END,'\n','msg_separacionU')
             self.text_widget.insert(END, msg1+'   ','msg_usuarioError ')
-            self.text_widget.insert(END,' \n\n','msg_separacionU')
-            self.text_widget.insert(END,'\n','msg_separacion')
-            pass
         
-        for m in msgs:
-            self.text_widget.insert(END,'\n','msg_separacionB')
-            
-            multiples=m.splitlines()
-            esLink=False
-
-            for mult in multiples:
-                mult=mult.strip()
-                if mult[0]=='[' and mult[len(mult)-1]==']':
-                    esLink=True
-                
-            if esLink:
-                self.text_widget.insert(END, '   '+m,'msg_botLink')
-            else:
-                self.text_widget.insert(END, '   '+m,'msg_bot')
+        #Colocar separacion
+        self.text_widget.insert(END,' \n\n','msg_separacionU')
+        self.text_widget.insert(END,'\n','msg_separacion')
+        #Colocar mensajes
+        for m in resJson:
+            self.text_widget.insert(END,'\n','msg_separacionB') #Espacio de separacion entre mensajes
+            if 'text' in m:
+                texto=m['text']
+                self.text_widget.insert(END,texto,'msg_bot')
+            if 'custom' in m:
+                texto=m['custom']['text']
+                link=m['custom']['link']
+                self.text_widget.insert(END,texto+"\n\n",'msg_bot')
+                self.text_widget.insert(END,link,'msg_botLink')
 
             self.text_widget.insert(END,'\n\n','msg_separacionB')
             self.text_widget.insert(END,'\n','msg_separacion')
-        
+            
         self.text_widget.configure(state=DISABLED)
         self.text_widget.see(END)
              

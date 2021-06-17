@@ -5,14 +5,23 @@ nlu:
   examples: |
     - hola
     - hi
+    - buenas tardes
+    - buenos dias
+    - buen dia
 
 - intent: revisar
   examples: |
-    - que [cursos](tipo_revisar) tengo? 
-    - cuales son mis [cursos](tipo_revisar)?
-    - en que [cursos](tipo_revisar) estoy?
+    - que [cursos](tipo_revisar:cursos) tengo? 
+    - cuales son mis [materias]{"entity":"tipo_revisar","value":"cursos"}?
+    - en que [clases]{"entity":"tipo_revisar","value":"cursos"} estoy?
     - quiero ver todos mis [cursos](tipo_revisar)
-
+    - muestrame los [anuncios](tipo_revisar) del curso
+    - que [anuncios](tipo_revisar) hay en el curso?
+    - cuales son los [anuncios](tipo_revisar) del curso?
+    - quiero ver los ultimos [3](cantidad_revisar) [publicaciones]{"entity":"tipo_revisar","value":"anuncios"}
+    - quiero ver los ultimos [5](cantidad_revisar) [anuncios](tipo_revisar)
+    - muestrame los ultimos [8](cantidad_revisar) [anuncios]{"entity":"tipo_revisar","value":"anuncios"}
+    - muestrame el [ultimo]{"entity":"cantidad_revisar","value":"1"} [anuncio]{"entity":"tipo_revisar","value":"anuncios"}
 - intent: buscar
   examples: |
     - buscar un [curso](tipo_buscar)
@@ -41,6 +50,3 @@ nlu:
     - visión robótica
     - sistemas inteligentes
     - modelado de sistemas
-
-
-

@@ -4,6 +4,7 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
+from os import link
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
@@ -21,31 +22,65 @@ class Revisar(Action):
 
 	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
 	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-		tipo=None
+		tipo = tracker.get_slot('tipo_revisar')
+	
+		retornar = None #devuelve si hay que establecer un slot
 		
-		#Obtener la ultima entidad
-		if(len(tracker.latest_message['entities'])>0): 
-			tipo=tracker.latest_message['entities'][0]['value']
-
 		#Si se encontro una entidad 
 		if tipo!=None:
 			#Si se estan buscando los cursos
+			#---------------Cursos------------------------
 			if tipo=='cursos':
 				#Obtener nombre de los cursos
 				cursos=ca.getCursosNombre()
 				dispatcher.utter_message(text="Tus cursos son:")
 				for curso in cursos:
-					dispatcher.utter_message(text=curso['nombre']+'\n['+curso['link']+']')
-			else:
-				#No se encontro entidad
-				dispatcher.utter_message(text="Ka?")	
-		else:
-			#No se encontro una entidad
-			dispatcher.utter_message(text="Ka?")
+					dispatcher.utter_message(json_message={"link":curso['link'],"text":curso['nombre']})
+			#---------------Anuncios----------------------
+			elif tipo=='anuncios':
+				curso = tracker.get_slot('curso')
+				cantidad = tracker.get_slot('cantidad_revisar')
+				if not curso: 
+					#Preguntar si no se sabe el curso
+					dispatcher.utter_message(text="¿Para cual curso?")
+				else:
+					print(cantidad)
+					if cantidad:
+						try:
+							c = int(cantidad)
+						except:
+							c = 3
+						resultado=ca.anuncios(curso,c)
+					else:
+						resultado=ca.anuncios(curso,10)
 
-		return []
+					print(resultado)
+					if resultado==-1:
+						dispatcher.utter_message(text='No se encontró el curso '+curso)				
+					else:
+						if resultado['anuncios']==-1:
+							dispatcher.utter_message(text=resultado['curso']+' no tiene anuncios')
+						else:
+							
+							dispatcher.utter_message(text='Anuncios de '+resultado['curso']+':')				
+							for r in resultado['anuncios']:
+								dispatcher.utter_message(json_message={"link":r['link'],"text":r['text']})
+		
+					retornar=[SlotSet('curso',None)]
+			else:
+				#No se reconoce lo que se quiere revisar
+				dispatcher.utter_message(text="No se que quieres que revise mija")	
+		else:
+			#No se especifico que revisar
+			dispatcher.utter_message(text="Ni idea de que revisar compa")
+		
+		if retornar:
+			return retornar
+		else:
+			return []
 
 class guardar_curso(Action):
+	#Guardar el slot curso
 	global ca
 	def name(self) -> Text:
 		return "action_guardar_curso"
@@ -72,7 +107,7 @@ class buscar_abrir(Action):
 			dispatcher.utter_message(text='Buscando '+curso+'...')
 			resultado=ca.buscarCurso(curso)
 			if resultado:
-				dispatcher.utter_message(text=resultado['nombre']+'\n['+resultado['link']+']')
+				dispatcher.utter_message(json_message={"link":resultado['link'],"text":resultado['nombre']})
 			else:
 				dispatcher.utter_message(text='No se encontró el curso '+curso)
 
