@@ -11,7 +11,7 @@ nlu:
 
 - intent: revisar
   examples: |
-    - que [cursos](tipo_revisar:cursos) tengo? 
+    - que [cursos](tipo_revisar) tengo? 
     - cuales son mis [materias]{"entity":"tipo_revisar","value":"cursos"}?
     - en que [clases]{"entity":"tipo_revisar","value":"cursos"} estoy?
     - quiero ver todos mis [cursos](tipo_revisar)
@@ -22,6 +22,7 @@ nlu:
     - quiero ver los ultimos [5](cantidad_revisar) [anuncios](tipo_revisar)
     - muestrame los ultimos [8](cantidad_revisar) [anuncios]{"entity":"tipo_revisar","value":"anuncios"}
     - muestrame el [ultimo]{"entity":"cantidad_revisar","value":"1"} [anuncio]{"entity":"tipo_revisar","value":"anuncios"}
+    - tengo [tareas](tipo_revisar)?
 - intent: buscar
   examples: |
     - buscar un [curso](tipo_buscar)

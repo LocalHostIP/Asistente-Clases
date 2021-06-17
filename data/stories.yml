@@ -29,6 +29,15 @@ stories:
     - tipo_revisar : 'anuncios'
   - action: action_revisar
 
+- story: path Revisar tarea curso sin asignar
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: revisar
+    entities:
+    - tipo_revisar: 'tareas'
+  - action: action_revisar
+
 - story: path Buscar buscar curso preguntar
   steps:
   - intent: saludar

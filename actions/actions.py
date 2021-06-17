@@ -67,6 +67,8 @@ class Revisar(Action):
 								dispatcher.utter_message(json_message={"link":r['link'],"text":r['text']})
 		
 					retornar=[SlotSet('curso',None)]
+			elif tipo == 'tareas':
+				dispatcher.utter_message(text='Tus tareas son:\n*No tareas encontradas.*')	
 			else:
 				#No se reconoce lo que se quiere revisar
 				dispatcher.utter_message(text="No se que quieres que revise mija")	
