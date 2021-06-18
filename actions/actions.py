@@ -23,8 +23,6 @@ class Revisar(Action):
 	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
 	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		tipo = tracker.get_slot('tipo_revisar')
-	
-		retornar = None #devuelve si hay que establecer un slot
 		
 		#Si se encontro una entidad 
 		if tipo!=None:
@@ -32,39 +30,22 @@ class Revisar(Action):
 			#---------------Cursos------------------------
 			if tipo=='cursos':
 				#Obtener nombre de los cursos
-				cursos=ca.getCursosNombre()
+				cursos=ca.getCursos()
 				dispatcher.utter_message(text="Tus cursos son:")
 				for curso in cursos:
 					dispatcher.utter_message(json_message={"link":curso['link'],"text":curso['nombre']})
 			#---------------Anuncios----------------------
 			elif tipo=='anuncios':
-				curso = tracker.get_slot('curso')
-				cantidad = tracker.get_slot('cantidad_revisar')
-				if not curso: 
-					#Preguntar si no se sabe el curso
-					dispatcher.utter_message(text="¿Para cual curso?")
-				else:
-					print(cantidad)
-					c=3
-					if cantidad:
-						try:
-							c = int(cantidad)
-						except:
-							pass
-							
-					resultado=ca.anuncios(curso,c)
+				resultado=ca.anunciosRecientes()
+				if resultado:
+					dispatcher.utter_message(text="Anuncios recientes:")
+					for c in resultado:
+						dispatcher.utter_message(text='Anuncios de '+c['curso']+":")
+						for a in c['anuncios']:
+							dispatcher.utter_message(json_message={"link":a['link'],"text":'('+str(a['updateTime'])[2:16]+')\n\n'+a['text']})
 
-					if resultado==-1:
-						dispatcher.utter_message(text='No se encontró el curso '+curso)				
-					else:
-						if resultado['anuncios']==-1:
-							dispatcher.utter_message(text=resultado['curso']+' no tiene anuncios')
-						else:
-							dispatcher.utter_message(text='Anuncios de '+resultado['curso']+':')				
-							for r in resultado['anuncios']:
-								dispatcher.utter_message(json_message={"link":r['link'],"text":r['text']})
-		
-					retornar=[SlotSet('curso',None)]
+				else:
+					dispatcher.utter_message(text="No tienes nuevos anuncios")
 			# ------ Tareas -------------
 			elif tipo == 'tareas':
 				dispatcher.utter_message(text='Tus tareas son:\n*No tareas encontradas.*')	
@@ -74,11 +55,54 @@ class Revisar(Action):
 		else:
 			#No se especifico que revisar
 			dispatcher.utter_message(text="No indicaste que revisar")
-		
-		if retornar:
-			return retornar
+
+		return []
+
+class RevisarUnCurso(Action):
+	global ca
+	def name(self) -> Text:
+		return "action_revisarUnCurso"
+
+	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
+	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		tipo = tracker.get_slot('tipo_revisar')
+			
+		#Si se encontro una entidad 
+		if tipo!=None:
+			#---------------Anuncios----------------------
+			if tipo=='anuncios':
+				curso = tracker.get_slot('curso')
+				cantidad = tracker.get_slot('cantidad_revisar')
+				if not curso: 
+					#Preguntar si no se sabe el curso
+					dispatcher.utter_message(text="¿Para cual curso?")
+				else:
+					c=3
+					if cantidad:
+						try:
+							c = int(cantidad)
+						except:
+							pass
+							
+					resultado=ca.anunciosCurso(c,nombre=curso)
+
+					if resultado==-1:
+						dispatcher.utter_message(text='No se encontró el curso '+curso)				
+					else:
+						if resultado['anuncios']==-1:
+							dispatcher.utter_message(text=resultado['curso']+' no tiene anuncios')
+						else:
+							dispatcher.utter_message(text='Anuncios de '+resultado['curso']+':')				
+							for r in resultado['anuncios']:
+								dispatcher.utter_message(json_message={"link":r['link'],"text":'('+str(r['updateTime'])[2:16]+')\n\n'+r['text']})
+			else:
+				#No se reconoce lo que se quiere revisar
+				dispatcher.utter_message(text="No enendí que revisar")	
 		else:
-			return []
+			#No se especifico que revisar
+			dispatcher.utter_message(text="No indicaste que revisar")
+		
+		return [SlotSet('curso',None)]
 
 class guardar_curso(Action):
 	#Guardar el slot curso
@@ -112,4 +136,4 @@ class buscar_abrir(Action):
 			else:
 				dispatcher.utter_message(text='No se encontró el curso '+curso)
 
-		return []
+		return [SlotSet('curso',None)]

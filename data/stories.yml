@@ -14,40 +14,58 @@ stories:
   steps:
   - intent: saludar
   - action: utter_saludar
-  - intent: revisar
+  - intent: revisarUnCurso
     entities:
-    - tipo_revisar : 'anuncios'
-  - action: action_revisar
+    - tipo_revisarUno : 'anuncios'
+  - action: action_revisarUnCurso
   - intent: dar_curso
   - action: action_guardar_curso
-  - action: action_revisar
+  - action: action_revisarUnCurso
+
+- story: path Revisar anuncios curso sin asignar sin saludo
+  steps:
+  - intent: revisarUnCurso
+    entities:
+    - tipo_revisarUno : 'anuncios'
+  - action: action_revisarUnCurso
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_revisarUnCurso
 
 - story: path Revisar anuncios curso asignado
   steps:
-  - intent: revisar
+  - intent: revisarUnCurso
     entities:
-    - tipo_revisar : 'anuncios'
-  - action: action_revisar
+    - tipo_revisarUno : 'anuncios'
+  - action: action_revisarUnCurso
 
-- story: path Revisar anuncios curso sin asignar con cantidad
+- story: path Revisar anuncios curso sin asignar con cantidad 
   steps:
   - intent: saludar
   - action: utter_saludar
-  - intent: revisar
+  - intent: revisarUnCurso
     entities:
-    - tipo_revisar : 'anuncios'
-    - tipo_revisar : 'cantidad'
-  - action: action_revisar
+    - tipo_revisarUno : 'anuncios'
+    - cantidad_revisar : 'cantidad'
+  - action: action_revisarUnCurso
   - intent: dar_curso
   - action: action_guardar_curso
-  - action: action_revisar
+  - action: action_revisarUnCurso
 
 - story: path Revisar anuncios curso asignado con cantidad
+  steps:
+  - intent: revisarUnCurso
+    entities:
+    - tipo_revisarUno : 'anuncios'
+    - cantidad_revisar : 'cantidad'
+    - revisar_especifico : 'si'
+  - action: action_revisarUnCurso
+
+- story: path Revisar anuncios recientes
   steps:
   - intent: revisar
     entities:
     - tipo_revisar : 'anuncios'
-    - tipo_revisar : 'cantidad'
   - action: action_revisar
 
 - story: path Revisar tarea curso sin asignar

@@ -11,19 +11,36 @@ nlu:
 
 - intent: revisar
   examples: |
+    #Cursos
     - que [cursos](tipo_revisar) tengo? 
     - cuales son mis [materias]{"entity":"tipo_revisar","value":"cursos"}?
     - en que [clases]{"entity":"tipo_revisar","value":"cursos"} estoy?
     - quiero ver todos mis [cursos](tipo_revisar)
-    - muestrame los [anuncios](tipo_revisar) del curso
-    - que [anuncios](tipo_revisar) hay en el curso?
-    - cuales son los [anuncios](tipo_revisar) del curso?
-    - quiero ver los ultimos [3](cantidad_revisar) [publicaciones]{"entity":"tipo_revisar","value":"anuncios"}
-    - quiero ver los ultimos [5](cantidad_revisar) [anuncios](tipo_revisar)
-    - muestrame los ultimos [8](cantidad_revisar) [anuncios]{"entity":"tipo_revisar","value":"anuncios"}
-    - muestrame el [ultimo]{"entity":"cantidad_revisar","value":"1"} [anuncio]{"entity":"tipo_revisar","value":"anuncios"}
-    - muestra el [ultimo]{"entity":"cantidad_revisar","value":"1"} [mensaje]{"entity":"tipo_revisar","value":"anuncios"}
+    #Anuncios recientes
+    - muestrame los [anuncios](tipo_revisar) recientes
+    - mostrar [anuncios](tipo_revisar)
+    - quiero ver los [mensajes]{"entity":"tipo_revisar","value":"anuncios"}
+    - revisar [publicaciones]{"entity":"tipo_revisar","value":"anuncios"} recientes
+    - cuales son los [anuncios]{"entity":"tipo_revisar","value":"anuncios"} recientes
+    - que [anuncios]{"entity":"tipo_revisar","value":"anuncios"} tengo?
+    - cuales [mensajes]{"entity":"tipo_revisar","value":"anuncios"} tengo?
+    #Tareas
     - tengo [tareas](tipo_revisar)?
+
+- intent: revisarUnCurso
+  examples: |
+    #Anuncios de un solo curso
+    - muestrame los [anuncios](tipo_revisarUno) de un curso
+    - que [anuncios](tipo_revisarUno) hay en un curso?
+    - cuales son los [anuncios](tipo_revisarUno) del curso?
+    - quiero ver los ultimos [3](cantidad_revisar) [publicaciones]{"entity":"tipo_revisarUno","value":"anuncios"} de una materia
+    - quiero ver los ultimos [5](cantidad_revisar) [anuncios](tipo_revisarUno) del curso
+    - muestrame los ultimos [8](cantidad_revisar) [anuncios]{"entity":"tipo_revisarUno","value":"anuncios"} de una clase
+    - muestrame el [ultimo]{"entity":"cantidad_revisar","value":"1"} [anuncio]{"entity":"tipo_revisarUno","value":"anuncios"} de un curso
+    - muestra el [ultimo]{"entity":"cantidad_revisar","value":"1"} [mensaje]{"entity":"tipo_revisarUno","value":"anuncios"} de una materia
+    - ver [anuncios](tipo_revisarUno) de un curso
+    - mostrar [publicaciones]{"entity":"tipo_revisarUno","value":"anuncios"} de una clase
+
 - intent: buscar
   examples: |
     - buscar un [curso](tipo_buscar)

@@ -9,11 +9,14 @@ intents:
   - out_of_scope
   - buscar
   - dar_curso
+  - revisarUnCurso
   
 entities:
   - tipo_revisar
   - tipo_buscar
   - cantidad_revisar
+  - tipo_revisarUno
+  
 
 slots:
   curso:
@@ -23,6 +26,9 @@ slots:
     type: text
     influence_conversation: true
   cantidad_revisar:
+    type: text
+    influence_conversation: true
+  tipo_revisarUno:
     type: text
     influence_conversation: true
 
@@ -50,6 +56,7 @@ responses:
 
 actions: 
   - action_revisar
+  - action_revisarUnCurso
   - action_buscar
   - action_guardar_curso
   - action_buscar_abrir
