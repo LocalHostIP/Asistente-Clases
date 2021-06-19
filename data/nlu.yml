@@ -4,7 +4,7 @@ nlu:
 - intent: saludar
   examples: |
     - hola
-    - hi
+    - que tal
     - buenas tardes
     - buenos dias
     - buen dia
@@ -77,3 +77,5 @@ nlu:
     - sabes algun chiste?
     - cuentame algo gracioso
     - hazme reir
+    - dime un chiste
+    - cuentame otro chiste

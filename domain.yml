@@ -34,8 +34,9 @@ slots:
 
 responses:
   utter_saludar:
-  - text: "Hola"
-  - text: "¿Qué quiere?"
+  - text: "Hola, buenos dias!"
+  - text: "Buen dia! En que le puedo ayudar?"
+  - text: "Que tal! Que puedo hacer por usted?"
 
   utter_cheer_up:
   - text: "Here is something to cheer you up:"
@@ -48,7 +49,7 @@ responses:
   - text: "Soy tu papá"
 
   utter_reir:
-  - text: "Que es tan gracios?"
+  - text: "Que es tan gracioso?"
 
   utter_please_rephrase:
   - text: "No se que quieres que haga, hable bien"
