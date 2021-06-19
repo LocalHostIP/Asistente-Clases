@@ -70,3 +70,10 @@ nlu:
     - sistemas inteligentes
     - modelado de sistemas
     - redes de circutos
+
+- intent: pregunta_chiste
+  examples: |
+    - cuentame un chiste?
+    - sabes algun chiste?
+    - cuentame algo gracioso
+    - hazme reir

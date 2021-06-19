@@ -97,3 +97,10 @@ stories:
   - intent: dar_curso
   - action: action_guardar_curso
   - action: action_buscar_abrir
+
+- story: chiste
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: pregunta_chiste
+  - action: utter_chiste

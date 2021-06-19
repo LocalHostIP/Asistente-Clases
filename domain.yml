@@ -5,11 +5,11 @@ intents:
   - revisar
   - adios
   - bot_challenge
-  - reir
   - out_of_scope
   - buscar
   - dar_curso
   - revisarUnCurso
+  - pregunta_chiste
   
 entities:
   - tipo_revisar
@@ -53,6 +53,12 @@ responses:
   utter_please_rephrase:
   - text: "No se que quieres que haga, hable bien"
 
+  utter_chiste:
+  - text: "Estas intentando tener una conversion con un bot jsjsjs"
+  - text: "Sabias que la manzana ayuda a reducir peso, y el platano tallas?"
+  - text: "Mama, estoy embarazada... \nAy, hija! Pues donde tenias la cabeza? \nEn la palanca de velocidades..."
+  - text: "Sabias que en la caminadora ejercitas las piernas, y en barras las nalgas?"
+  - text: "Como se dice recien casados en aleman? \nDes virgensen!"
 
 actions: 
   - action_revisar
