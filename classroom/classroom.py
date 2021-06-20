@@ -12,7 +12,7 @@ import datetime
 from google.oauth2 import service_account
 
 SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly','https://www.googleapis.com/auth/classroom.announcements',
-'https://www.googleapis.com/auth/devstorage.read_only']
+'https://www.googleapis.com/auth/devstorage.read_only','https://www.googleapis.com/auth/classroom.coursework.me']
 
 
 def normalize(s): #Quitar tildes y convertir a minusculas
@@ -124,12 +124,45 @@ class Classroom:
 
         return resultado
 
+    def listaTareasSinHacer(self,nombre=None,id=None,cantidad=5):
+        res=None
+        curso=self.buscarCurso(nombre,id)
+        if curso:
+            id=curso['id']
+        else:
+            res = -1 # No se encontro el curso
+        if id:
+            res=[]
+            tareas = self.service.courses().courseWork().list(courseId=id,pageSize=cantidad,orderBy='dueDate asc').execute()['courseWork']
+            for t in tareas:
+                #Revisar si se ha entregado
+                sub = self.service.courses().courseWork().studentSubmissions().list(courseId=curso['id'],courseWorkId=t['id']).execute()
+                #print(sub)
+                sub=sub['studentSubmissions'][0]
+                if sub['state']!='TURNED_IN':
+                    fechaUpdate=dTime.strptime(t['updateTime'][2:10]+" "+ t['updateTime'][11:19],'%y-%m-%d %H:%M:%S')
+                    #print(sub.keys())
+
+                    fechaDue=-1
+                    if 'dueDate' in t:
+                        fechaDue=dTime.strptime(t['dueDate'][2:10]+" "+ t['dueDate'][11:19],'%y-%m-%d %H:%M:%S')
+                        fechaUpdate=fechaUpdate-datetime.timedelta(hours = 5)
+                        fechaDue=fechaDue-datetime.timedelta(hours = 5)
+
+                    res.append({'titulo':t['title'],"description":t['description'],'state':sub['state'],'link':t['alternateLink'],'updateTime':fechaUpdate,'dueDate':fechaDue})
+        return res
 
 def main():
     ca=Classroom()
-    an=ca.anunciosRecientes()
-    for a in an:
-        print(a['updateTime'])
+    res=ca.listaTareasSinHacer('sistemas inteligentes')
+    for r in res:
+        print(r['titulo'])
+        print(r['updateTime'])
+        print(r['dueDate'])
+        print(r['link'])
+
+    #an=ca.prueba()
+    #print(an)
 
 if __name__=='__main__':
     main()
