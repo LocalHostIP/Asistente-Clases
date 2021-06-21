@@ -48,7 +48,16 @@ class Revisar(Action):
 					dispatcher.utter_message(text="No tienes nuevos anuncios")
 			# ------ Tareas -------------
 			elif tipo == 'tareas':
-				dispatcher.utter_message(text='Tus tareas son:\n*No tareas encontradas.*')	
+				dispatcher.utter_message(text='Tus tareas son:\n')
+				resultado = ca.tareasPendientes()
+				hayTareas=False
+				for r in resultado:
+					tareas=r['tareas']
+					if tareas and tareas!=-1: #Si no es una lista vacia o vale -1
+						dispatcher.utter_message(text="Curso: "+r['curso'])
+						for t in tareas:
+							dispatcher.utter_message(json_message={"link":t['link'],"text":'('+str(t['updateTime'])[2:16]+')\n\n'+t['titulo']+"\n\n"+t['description']})
+
 			else:
 				#No se reconoce lo que se quiere revisar
 				dispatcher.utter_message(text="No enendí que revisar")	

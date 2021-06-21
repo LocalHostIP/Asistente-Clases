@@ -27,6 +27,9 @@ nlu:
     - tengo [mensajes]{"entity":"tipo_revisar","value":"anuncios"} nuevos?
     #Tareas
     - tengo [tareas](tipo_revisar)?
+    - que [tareas](tipo_revisar) tengo?
+    - cuales son mis [trabajos]{"entity":"tipo_revisar","value":"anuncios"}?
+    - reivsar [actividades]{"entity":"tipo_revisar","value":"anuncios"}
 
 - intent: revisarUnCurso
   examples: |

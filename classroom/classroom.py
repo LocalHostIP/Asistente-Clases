@@ -124,7 +124,7 @@ class Classroom:
 
         return resultado
 
-    def listaTareasSinHacer(self,nombre=None,id=None,cantidad=5):
+    def tareasPendientesCurso(self,nombre=None,id=None,cantidad=2):
         res=None
         curso=self.buscarCurso(nombre,id)
         if curso:
@@ -139,30 +139,34 @@ class Classroom:
                 sub = self.service.courses().courseWork().studentSubmissions().list(courseId=curso['id'],courseWorkId=t['id']).execute()
                 #print(sub)
                 sub=sub['studentSubmissions'][0]
-                if sub['state']!='TURNED_IN':
+                if sub['state']!='TURNED_IN' and sub['state']!='RETURNED':
                     fechaUpdate=dTime.strptime(t['updateTime'][2:10]+" "+ t['updateTime'][11:19],'%y-%m-%d %H:%M:%S')
                     #print(sub.keys())
 
                     fechaDue=-1
                     if 'dueDate' in t:
-                        fechaDue=dTime.strptime(t['dueDate'][2:10]+" "+ t['dueDate'][11:19],'%y-%m-%d %H:%M:%S')
+                        fechaDue=datetime.datetime(int(t['dueDate']['year']),int(t['dueDate']['month']),int(t['dueDate']['day']))
                         fechaUpdate=fechaUpdate-datetime.timedelta(hours = 5)
                         fechaDue=fechaDue-datetime.timedelta(hours = 5)
 
                     res.append({'titulo':t['title'],"description":t['description'],'state':sub['state'],'link':t['alternateLink'],'updateTime':fechaUpdate,'dueDate':fechaDue})
         return res
 
+    def tareasPendientes(self):
+        if not self.cursos:
+            self.getCursos()
+        res=[]
+        for curso in self.cursos:
+            res.append({'curso':curso['nombre'],'tareas':self.tareasPendientesCurso(id=curso['id'])})
+        return res
+        
 def main():
     ca=Classroom()
-    res=ca.listaTareasSinHacer('sistemas inteligentes')
+    res=ca.tareasPendientes()
     for r in res:
-        print(r['titulo'])
-        print(r['updateTime'])
-        print(r['dueDate'])
-        print(r['link'])
-
-    #an=ca.prueba()
-    #print(an)
+        print('Curso: '+r['curso'])
+        print('Tareas:')
+        print(r['tareas'])
 
 if __name__=='__main__':
     main()
