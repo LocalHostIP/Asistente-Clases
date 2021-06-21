@@ -133,7 +133,7 @@ class Classroom:
             res = -1 # No se encontro el curso
         if id:
             res=[]
-            tareas = self.service.courses().courseWork().list(courseId=id,pageSize=cantidad,orderBy='dueDate asc').execute()['courseWork']
+            tareas = self.service.courses().courseWork().list(courseId=id,pageSize=cantidad,orderBy='dueDate desc').execute()['courseWork']
             for t in tareas:
                 #Revisar si se ha entregado
                 sub = self.service.courses().courseWork().studentSubmissions().list(courseId=curso['id'],courseWorkId=t['id']).execute()
