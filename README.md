@@ -8,6 +8,12 @@ Actuales capacidades del bot:
   - Buscar curso
   - Speech to text de google cloud
   - Abrir links desde interfaz
+  - Contar chistes
+  - Mostrar anuncios recientes (3 dias)
+  - Mostrar anuncios de una materia
+  - Mostrar una cantidad deseada de anuncnios de una materia
+  - Mostrar tareas sin hacer de todas las materias
+  - Buscar un curso en especifico
 
 Librerias:
   - rasa
