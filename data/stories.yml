@@ -104,3 +104,8 @@ stories:
   - action: utter_saludar
   - intent: pregunta_chiste
   - action: utter_chiste
+
+- story: path Dar información sobre el bot
+  steps:
+  - intent: informacion_bot
+  - action: utter_informacion_bot

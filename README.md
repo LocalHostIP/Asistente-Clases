@@ -14,6 +14,9 @@ Actuales capacidades del bot:
   - Mostrar una cantidad deseada de anuncnios de una materia
   - Mostrar tareas sin hacer de todas las materias
   - Buscar un curso en especifico
+  - Contar chistes
+  - Mensaje de bienvenida 
+  - Qué puedes hacer?
 
 Librerias:
   - rasa

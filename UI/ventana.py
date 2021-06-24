@@ -29,6 +29,43 @@ class ChatApplication:
         self.window = Tk()
         self._setup_main_window()
         self.thGrabar=threading.Thread(target=self.grabar,daemon=True)
+        self._default_welcome_message()
+
+    def _default_welcome_message(self):
+
+        #Enviar datos a rasa
+        self.text_widget.configure(state=NORMAL)
+        data = {
+            "sender":"ventana_usuario",
+            "message":"default_welcome_message"
+        }
+
+        resJson=[]
+        self.text_widget.insert(END,'\n','msg_separacion')
+
+        #Obtener los mensajes
+        response = requests.request("POST", API_ENDPOINT, data=json.dumps(data), headers=headers)
+        resJson = response.json()        
+
+        self.msg_entry.delete(0, END)
+
+        for m in resJson:
+            self.text_widget.insert(END,'\n','msg_separacionB') #Espacio de separacion entre mensajes
+            if 'text' in m:
+                texto=m['text']
+                self.text_widget.insert(END,texto,'msg_bot')
+            if 'custom' in m:
+                texto=m['custom']['text']
+                link=m['custom']['link']
+                self.text_widget.insert(END,texto+"\n\n",'msg_bot')
+                self.text_widget.insert(END,link,'msg_botLink')
+
+            self.text_widget.insert(END,'\n\n','msg_separacionB')
+            self.text_widget.insert(END,'\n','msg_separacion')
+            
+        self.text_widget.configure(state=DISABLED)
+        self.text_widget.see(END)
+
         
     def run(self):
         self.window.mainloop()
@@ -203,4 +240,7 @@ class ChatApplication:
 
 if __name__ == "__main__":
     app = ChatApplication()
+    #default_welcome_message(app)
     app.run()
+
+

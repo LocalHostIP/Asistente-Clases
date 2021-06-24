@@ -83,3 +83,10 @@ nlu:
     - hazme reir
     - dime un chiste
     - cuentame otro chiste
+
+- intent: informacion_bot
+  examples: |
+    - que eres capaz de hacer?
+    - a que me puedes ayudar?
+    - para que sirves?
+    - default_welcome_message

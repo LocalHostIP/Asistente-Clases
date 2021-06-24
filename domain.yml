@@ -10,6 +10,7 @@ intents:
   - dar_curso
   - revisarUnCurso
   - pregunta_chiste
+  - informacion_bot
   
 entities:
   - tipo_revisar
@@ -60,6 +61,9 @@ responses:
   - text: "Mama, estoy embarazada... \nAy, hija! Pues donde tenias la cabeza? \nEn la palanca de velocidades..."
   - text: "Sabias que en la caminadora ejercitas las piernas, y en barras las nalgas?"
   - text: "Como se dice recien casados en aleman? \nDes virgensen!"
+
+  utter_informacion_bot:
+  - text: "Hola! Soy LandaBot, tu Asistente Virtual para Google Classroom. Puedo ayudarte a encontrar tus clases, trabajos y anuncios!"
 
 actions: 
   - action_revisar
