@@ -60,7 +60,7 @@ class Revisar(Action):
 
 			else:
 				#No se reconoce lo que se quiere revisar
-				dispatcher.utter_message(text="No enendí que revisar")	
+				dispatcher.utter_message(text="No entendí que revisar")	
 		else:
 			#No se especifico que revisar
 			dispatcher.utter_message(text="No indicaste que revisar")

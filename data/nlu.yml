@@ -8,6 +8,7 @@ nlu:
     - buenas tardes
     - buenos dias
     - buen dia
+    - buenas noches
 
 - intent: revisar
   examples: |
@@ -58,6 +59,8 @@ nlu:
     - adios
     - hasta luego
     - chao
+    - Hasta pronto
+    - Hasta la próxima
 
 - intent: bot_challenge
   examples: |
@@ -89,4 +92,5 @@ nlu:
     - que eres capaz de hacer?
     - a que me puedes ayudar?
     - para que sirves?
+    - me puedes ayudar?
     - default_welcome_message
