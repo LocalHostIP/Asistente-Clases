@@ -29,8 +29,8 @@ nlu:
     #Tareas
     - tengo [tareas](tipo_revisar)?
     - que [tareas](tipo_revisar) tengo?
-    - cuales son mis [trabajos]{"entity":"tipo_revisar","value":"anuncios"}?
-    - reivsar [actividades]{"entity":"tipo_revisar","value":"anuncios"}
+    - cuales son mis [trabajos]{"entity":"tipo_revisar","value":"tareas"}?
+    - reivsar [actividades]{"entity":"tipo_revisar","value":"tareas"}
 
 - intent: revisarUnCurso
   examples: |
@@ -45,6 +45,10 @@ nlu:
     - muestra el [ultimo]{"entity":"cantidad_revisar","value":"1"} [mensaje]{"entity":"tipo_revisarUno","value":"anuncios"} de una sola materia
     - ver [mensajes](tipo_revisarUno) de un solo curso
     - mostrar [publicaciones]{"entity":"tipo_revisarUno","value":"anuncios"} de una sola clase
+    #Alumnos de un solo curso
+    - quienes son mis [alumnos](tipo_revisarUno) de un solo curso?
+    - quien es mi [compañeros]{"entity":"tipo_revisarUno","value":"alumnos"} de clase?
+    - muestrame a mis [compañeros]{"entity":"tipo_revisarUno","value":"alumnos"} de curso?
 
 - intent: buscar
   examples: |
@@ -52,7 +56,7 @@ nlu:
     - quiero buscar un [curso](tipo_buscar)
     - mostrar [curso](tipo_buscar)
     - dame el enlace del [curso](tipo_buscar)
-    - muestrtame el link del [curso](tipo_buscar)
+    - muestrame el link del [curso](tipo_buscar)
 
 - intent: adios
   examples: |

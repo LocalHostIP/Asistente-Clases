@@ -17,6 +17,7 @@ Actuales capacidades del bot:
   - Contar chistes
   - Mensaje de bienvenida 
   - Qué puedes hacer?
+  - Revisar alumnos de un curso
 
 Librerias:
   - rasa

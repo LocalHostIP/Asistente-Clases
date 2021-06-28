@@ -46,7 +46,7 @@ class Revisar(Action):
 
 				else:
 					dispatcher.utter_message(text="No tienes nuevos anuncios")
-			# ------ Tareas -------------
+			# ---------------Tareas------------------------
 			elif tipo == 'tareas':
 				dispatcher.utter_message(text='Tus tareas son:\n')
 				resultado = ca.tareasPendientes()
@@ -57,7 +57,6 @@ class Revisar(Action):
 						dispatcher.utter_message(text="Curso: "+r['curso'])
 						for t in tareas:
 							dispatcher.utter_message(json_message={"link":t['link'],"text":'('+str(t['updateTime'])[2:16]+')\n\n'+t['titulo']+"\n\n"+t['description']})
-
 			else:
 				#No se reconoce lo que se quiere revisar
 				dispatcher.utter_message(text="No entendí que revisar")	
@@ -74,7 +73,7 @@ class RevisarUnCurso(Action):
 
 	def run(self, dispatcher: CollectingDispatcher,tracker: Tracker, 
 	domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-		tipo = tracker.get_slot('tipo_revisar')
+		tipo = tracker.get_slot('tipo_revisarUno')
 			
 		#Si se encontro una entidad 
 		if tipo!=None:
@@ -104,9 +103,30 @@ class RevisarUnCurso(Action):
 							dispatcher.utter_message(text='Anuncios de '+resultado['curso']+':')				
 							for r in resultado['anuncios']:
 								dispatcher.utter_message(json_message={"link":r['link'],"text":'('+str(r['updateTime'])[2:16]+')\n\n'+r['text']})
+			#---------------Alumnos----------------------
+			elif tipo == 'alumnos':
+				curso = tracker.get_slot('curso')
+				if not curso: 
+					#Preguntar si no se sabe el curso
+					dispatcher.utter_message(text="¿Para cual curso?")
+				else:
+					resultado=ca.alumnosCurso(nombre=curso)
+
+					if resultado==-1:
+						dispatcher.utter_message(text='No se encontró el curso '+curso)				
+					else:
+						if resultado['alumnos']==-1:
+							dispatcher.utter_message(text=resultado['curso']+' no tiene alumnos inscritos')
+						else:
+							dispatcher.utter_message(text='Alumnos de '+resultado['curso']+':')				
+							for r in resultado['alumnos']:
+								dispatcher.utter_message(text=r['name']+'\n'+r['email'])
+
 			else:
 				#No se reconoce lo que se quiere revisar
-				dispatcher.utter_message(text="No enendí que revisar")	
+				print(tipo)
+				dispatcher.utter_message(text="No entendí que revisar")	
+		
 		else:
 			#No se especifico que revisar
 			dispatcher.utter_message(text="No indicaste que revisar")

@@ -12,7 +12,9 @@ import datetime
 from google.oauth2 import service_account
 
 SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly','https://www.googleapis.com/auth/classroom.announcements',
-'https://www.googleapis.com/auth/devstorage.read_only','https://www.googleapis.com/auth/classroom.coursework.me']
+'https://www.googleapis.com/auth/devstorage.read_only','https://www.googleapis.com/auth/classroom.coursework.me',
+'https://www.googleapis.com/auth/classroom.rosters','https://www.googleapis.com/auth/classroom.rosters.readonly',
+'https://www.googleapis.com/auth/classroom.profile.emails']
 
 
 def normalize(s): #Quitar tildes y convertir a minusculas
@@ -159,7 +161,27 @@ class Classroom:
         for curso in self.cursos:
             res.append({'curso':curso['nombre'],'tareas':self.tareasPendientesCurso(id=curso['id'])})
         return res
+    
+    def alumnosCurso(self,nombre=None,id_course=None):
         
+        res=None
+        curso=self.buscarCurso(nombre,id_course)
+        if curso:
+            id_course=curso['id']
+        else:
+            res = -1 # No se encontro el curso
+
+        if id_course:
+            alumnos = self.service.courses().students().list(courseId=id_course, pageSize=None, pageToken=None, x__xgafv=None).execute()
+            res={'curso':curso['nombre'],'alumnos':-1}
+            if alumnos:
+                res['alumnos']=[]
+                alumnos = alumnos['students']
+                for alumno in alumnos:
+                    name = alumno['profile']['name']
+                    res['alumnos'].append({'email':alumno['profile']['emailAddress'], 'name':name['fullName']})
+        return res
+    
 def main():
     ca=Classroom()
     res=ca.tareasPendientes()

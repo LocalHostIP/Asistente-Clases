@@ -39,6 +39,25 @@ stories:
     - tipo_revisarUno : 'anuncios'
   - action: action_revisarUnCurso
 
+- story: path Revisar alumnos de un curso sin asignar
+  steps:
+  - intent: saludar
+  - action: utter_saludar
+  - intent: revisarUnCurso
+    entities:
+    - tipo_revisarUno : 'alumnos'
+  - action: action_revisarUnCurso
+  - intent: dar_curso
+  - action: action_guardar_curso
+  - action: action_revisarUnCurso
+
+- story: path Revisar alumnos de un curso asignado
+  steps:
+  - intent: revisarUnCurso
+    entities:
+    - tipo_revisarUno : 'alumnos'
+  - action: action_revisarUnCurso
+
 - story: path Revisar anuncios curso sin asignar con cantidad 
   steps:
   - intent: saludar

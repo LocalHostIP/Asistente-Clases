@@ -68,7 +68,7 @@ responses:
   - text: "- ¿Cuál es el café más peligroso del mundo?\n- El ex-preso"
   - text: "- Perdone, ¿es este el ascensor de subida?\n- No, he montado en otros mejores."
   - text: "– ¿De dónde vienen los hamster?\n– De Hamsterdam"
-  - text: "– ¿Está Agustín?\n- No, estoy incomodín"
+  - text: "– Hola, ¿está Agustín?\n- No, estoy incomodín"
 
   utter_informacion_bot:
   - text: "Hola! Soy Kermin, tu Asistente Virtual para Google Classroom. Puedo ayudarte a encontrar tus clases, trabajos y anuncios!"
