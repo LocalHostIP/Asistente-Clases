@@ -34,4 +34,7 @@ Dependencias:
 - Murad Osmanoglu (Luis Humberto Márquez Álvarez)
 
 ## Credenciales google cloud
+Colocar el archivo de credenciales (credentials.json) de la API de Google Classroom en la carpeta credentials de la carpeta classroom
+
+Colocar el archivo de credenciales de la API de Speech to Text de Google (demoServiceAccount.json) en la carpeta UI
 
