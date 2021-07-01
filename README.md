@@ -19,15 +19,19 @@ Actuales capacidades del bot:
   - Qué puedes hacer?
   - Revisar alumnos de un curso
 
-Librerias:
+Dependencias:
   - rasa
   - tkinter
   - pip install --upgrade google-cloud-speech
   - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
   - pip install rasa[spacy]
-  - python -m spacy download es\_core\_news_md
+  - python -m spacy download es_core_news_md
+  - pyaudio
 
 ## Colaboradores
-Tere la Secretaria
-A Lazaro le gusta Luba
-Murad Osmanoglu
+- Tere la Secretaria (Miguel Angel Guerrero Padilla)
+- A Lazaro le gusta Luba (Lazaro Fabricio Torres Orozco)
+- Murad Osmanoglu (Luis Humberto Márquez Álvarez)
+
+## Credenciales google cloud
+
