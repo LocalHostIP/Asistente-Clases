@@ -29,9 +29,9 @@ Dependencias:
   - pyaudio
 
 ## Colaboradores
-- Tere la Secretaria (Miguel Angel Guerrero Padilla)
-- A Lazaro le gusta Luba (Lazaro Fabricio Torres Orozco)
-- Murad Osmanoglu (Luis Humberto Márquez Álvarez)
+- Miguel Angel Guerrero Padilla
+- Lazaro Fabricio Torres Orozco
+- Luis Humberto Márquez Álvarez
 
 ## Credenciales google cloud
 Colocar el archivo de credenciales (credentials.json) de la API de Google Classroom en la carpeta credentials de la carpeta classroom
